@@ -61,9 +61,10 @@ class DepartmentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Departments $department)
     {
-        $department = Departments::find($id);
+        $department = Departments::all();
+
         return response()->json([
             'status' => 'success',
             'department' => $department
@@ -101,9 +102,8 @@ class DepartmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Departments $department)
     {
-        $department = Departments::find($id);
         $department->delete();
         return response()->json([
             'status' => 'success',

@@ -22,8 +22,10 @@ class EmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'rquired|string|max:255',
-            'email' => 'required|email|max255'
+            'fisrt_name' => 'reuired|string|max:255',
+            'last_name' => 'reuired|string|max:255',
+            'email' => 'required|email|max255',
+            'department_id' => 'required|integer'
         ];
     }
 }

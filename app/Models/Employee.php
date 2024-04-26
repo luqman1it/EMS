@@ -35,8 +35,20 @@ class Employee extends Model
     {
         return $this->morphMany(Note::class, 'notable');
     }
-    public function getFullNameAttribute()
+    public function getFirstNameAttribute()
     {
-        return $this->fisrt_name . '' . $this->last_name;
+        return ucfirst($this->first_name);
+    }
+    public function setFirstNameAttribute($firstName)
+    {
+        $this->attributes['fisrt_name'] = ucfirst($firstName);
+    }
+    public function getLastNameAttribute()
+    {
+        return ucfirst($this->last_name);
+    }
+    public function setLastNameAttribute($lastName)
+    {
+        $this->attributes['last_name'] = ucfirst($lastName);
     }
 }

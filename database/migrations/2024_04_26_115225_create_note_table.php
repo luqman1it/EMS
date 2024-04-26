@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('note', function (Blueprint $table) {
             $table->id();
+            $table->text('note');
             $table->morphs('notable');
             $table->timestamps();
         });

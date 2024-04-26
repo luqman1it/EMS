@@ -45,8 +45,10 @@ class EmployeeController extends Controller
             $request->rules();
             DB::commit();
             $employee = Employee::create([
-                'name' => $request->name,
-                'email' => $request->email
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'department_id' => $request->department_id
             ]);
             return response()->json([
                 'status' => 'sucess',
@@ -65,9 +67,9 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::all();
         return response()->json([
             'status' => 'success',
             'employee' => $employee,
@@ -108,9 +110,9 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        $employee = Employee::find($id);
+
         $employee->delete();
         return response()->json([
             'status' => 'success',
