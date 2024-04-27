@@ -31,5 +31,12 @@ Route::middleware(['api'])->group(function () {
     Route::post('/department/', [DepartmentController::class, 'store']);
     Route::get('/department/{depId}', [DepartmentController::class], 'show');
     Route::put('/department/{depId}', [DepartmentController::class], 'update');
-    Route::delete('/department/{depId}', [DepartmentController::class], 'delete');
+    Route::delete('/department/{depId}', [DepartmentController::class], 'destroy');
+});
+Route::middleware(['api'])->group(function () {
+    Route::get('/employee', [EmployeeController::class, 'index']);
+    Route::post('/employee/', [EmployeeController::class, 'store']);
+    Route::get('/employee/{depId}', [EmployeeController::class], 'show');
+    Route::put('/employee/{depId}', [EmployeeController::class], 'update');
+    Route::delete('/employee/{depId}', [EmployeeController::class], 'destroy');
 });
