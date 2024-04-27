@@ -21,7 +21,6 @@ last_name: The last name of the employee.
 email: The email address of the employee.
 department_id: A foreign key referencing the id of the department to which the employee belongs.
 
-
 [3] Projects Table
 The projects table tracks information related to various projects undertaken by the organization. Each project has a unique identifier (id) and may include fields such as project name, description, start date, end date, etc. This table is utilized in the many-to-many relationship between employees and projects.
 
@@ -52,8 +51,6 @@ The system supports a many-to-many relationship between employees and projects, 
 [3] Polymorphic Relations
 Polymorphic Relations for Notes
 Both departments and employees have the ability to have associated notes. This is implemented using polymorphic relations, where the notes table has two columns: notable and note.
-
-
 
 ### Installation ###
 to install and run the project locally,follow this steps:
