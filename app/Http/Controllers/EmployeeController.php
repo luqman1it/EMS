@@ -15,10 +15,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = Employee::all();
+        $employees = Employee::all();
         return response()->json([
-            'status' => "sucess",
-            'employees' => $employee
+            'status' => 'success',
+            'employees' => $employees
         ]);
     }
     public function getEmployeesWithDepartments()
@@ -87,24 +87,26 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeRequest  $request, Employee $employee)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255'
-        ]);
-        $newData = [];
-        if (isset($request->name)) {
-            $newData['name'] = $request->name;
+        try {
+            DB::beginTransaction();
+            $request->rules();
+            $newData = $request->only(['first_name', 'last_name', 'email']);
+            $employee->update($newData);
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'employee' => $employee
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error($th);
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Failed to update employee'
+            ]);
         }
-        if (isset($request->email)) {
-            $newData = $request->email;
-        }
-        $employee->update($newData);
-        return response()->json([
-            'status' => 'success',
-            'employee' => $employee
-        ]);
     }
 
     /**
@@ -113,10 +115,18 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
 
-        $employee->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'employee deleted successfully'
-        ]);
+        try {
+            $employee->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Employee deleted successfully'
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Failed to delete employee'
+            ]);
+        }
     }
 }

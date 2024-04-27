@@ -27,6 +27,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 Route::middleware(['api'])->group(function () {
-    Route::apiResource('empolyee', EmployeeController::class);
-    Route::apiResource('department', DepartmentController::class);
+    Route::get('/department', [DepartmentController::class, 'index']);
+    Route::post('/department/', [DepartmentController::class, 'store']);
+    Route::get('/department/{depId}', [DepartmentController::class], 'show');
+    Route::put('/department/{depId}', [DepartmentController::class], 'update');
+    Route::delete('/department/{depId}', [DepartmentController::class], 'delete');
 });

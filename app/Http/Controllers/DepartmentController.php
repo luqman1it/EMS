@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Models\Department;
-use App\Models\Departments;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,20 +16,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $department = Department::all();
+        $departments = Department::all();
         return response()->json([
             'status' => 'success',
-            'department' => $department
+            'department' => $departments
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -64,39 +57,24 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        $department = Department::all();
-
         return response()->json([
             'status' => 'success',
             'department' => $department
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Department $departments)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreDepartmentRequest $request, Department $departments)
+    public function update(StoreDepartmentRequest $request, Department $department)
     {
         $request->rules();
-        $newData = [];
-        if (isset($request->name)) {
-            $newData['name'] = $request->name;
-        }
-        if (isset($request->description)) {
-            $newData['description'] = $request->description;
-        }
-        $departments->update($newData);
+        $newData = $request->only(['name', 'description']);
+        $department->update($newData);
         return response()->json([
             'status' => 'success',
-            'employee' => $departments
+            'department' => $department
         ]);
     }
 
