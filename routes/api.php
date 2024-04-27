@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,5 +28,5 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::middleware(['api'])->group(function () {
     Route::apiResource('empolyee', EmployeeController::class);
-    Route::apiResource('department', DepartmentsController::class);
+    Route::apiResource('department', DepartmentController::class);
 });
