@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDepartmentRequest;
+use App\Models\Department;
 use App\Models\Departments;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class DepartmentsController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $department = Departments::all();
+        $department = Department::all();
         return response()->json([
             'status' => 'success',
             'department' => $department
@@ -40,7 +41,7 @@ class DepartmentsController extends Controller
             DB::beginTransaction();
             $request->rules();
             DB::commit();
-            $department =  Departments::create([
+            $department =  Department::create([
                 'name' => $request->name,
                 'description' => $request->description
             ]);
@@ -61,9 +62,9 @@ class DepartmentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Departments $department)
+    public function show(Department $department)
     {
-        $department = Departments::all();
+        $department = Department::all();
 
         return response()->json([
             'status' => 'success',
@@ -74,7 +75,7 @@ class DepartmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Departments $departments)
+    public function edit(Department $departments)
     {
         //
     }
@@ -82,7 +83,7 @@ class DepartmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreDepartmentRequest $request, Departments $departments)
+    public function update(StoreDepartmentRequest $request, Department $departments)
     {
         $request->rules();
         $newData = [];
@@ -102,7 +103,7 @@ class DepartmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Departments $department)
+    public function destroy(Department $department)
     {
         $department->delete();
         return response()->json([
