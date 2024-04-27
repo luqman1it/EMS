@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Luqman Ali ###
+----------------- Employee Management System -----------------
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Overview ###
+This Project a Employee Management System that facilitates the
+management of departments and employees.
+the system featuers : user authentication, CRUD operations for employees and departments,
+relationships between them,soft delete.
 
-## About Laravel
+### Database Tables ###
+[1] Departments Table
+The departments table stores information about the various departments within the organization. Each department has a unique identifier (id) and contains the following fields:
+name: The name of the department.
+description: A brief description or summary of the department's purpose or function.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[2] Employees Table
+The employees table contains records for all the employees working within the organization. Each employee has a unique identifier (id) and includes the following fields:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+first_name: The first name of the employee.
+last_name: The last name of the employee.
+email: The email address of the employee.
+department_id: A foreign key referencing the id of the department to which the employee belongs.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+[3] Projects Table
+The projects table tracks information related to various projects undertaken by the organization. Each project has a unique identifier (id) and may include fields such as project name, description, start date, end date, etc. This table is utilized in the many-to-many relationship between employees and projects.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+[4] Notes Table
+The notes table serves as a flexible mechanism for attaching notes to either departments or employees. It is implemented using polymorphic relations and contains the following fields:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+id: The unique identifier for the note record.
+notable: The ID of the related entity (either department or employee).
+note: The content or text of the note.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+[5] employee_project
+The employee_project table serves as a pivot table to establish a many-to-many relationship between employees and projects. This table facilitates the assignment of multiple employees to multiple projects and vice versa. It contains the following fields:
 
-## Laravel Sponsors
+id: The unique identifier for the pivot record.
+project_id: A foreign key referencing the id of the project to which an employee is assigned.
+employee_id: A foreign key referencing the id of the employee assigned to a project.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Relationships ###
+One-to-Many Relationship between Employee and Department
+In the Employee Management System, there exists a one-to-many relationship between employees and departments. This means that:
+[1] One To Many
+An employee belongs to a single department.
+A department can have multiple employees.
+This relationship is established by adding a department_id foreign key to the employees table, referencing the id primary key of the departments table.
+[2] Many To Many
+Many-to-Many Relationship between Employees and Projects
+The system supports a many-to-many relationship between employees and projects, allowing employees to work on multiple projects and projects to involve multiple employees. This relationship is achieved through a pivot table called employee_project, which contains the foreign keys employee_id and project_id.
+[3] Polymorphic Relations
+Polymorphic Relations for Notes
+Both departments and employees have the ability to have associated notes. This is implemented using polymorphic relations, where the notes table has two columns: notable and note.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Installation ###
+to install and run the project locally,follow this steps:
+[1] clone the repository from GitHub:
+https://github.com/luqman1it/EMS.git
+[2]install dependencies
+composer install
+[3]Copy the '.env.example' file to '.env' and configure the database settings
+[4]generate a new application key
+php artisan key:generate
+[5]run database migration
+php artisan migrata
+[6]start the development serve
+php artisan serve
